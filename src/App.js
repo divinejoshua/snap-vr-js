@@ -59,7 +59,7 @@ function App() {
 
       </section>
 
-      <section className="about p-3 mb-10">
+      <section className="about p-3 mb-20">
       <h5 className='font-bold text-gray-400 mb-2'>About</h5>
         <p>Wearkit VR uses machine learning and augamented reality to create a virtual experience for users to put on virtual accessories</p>
 
