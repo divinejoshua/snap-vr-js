@@ -14,7 +14,7 @@ function App() {
       { name: 'Item 7', id: 7 },
   ]);
 
-  const [active, setactive] = useState(0);
+  const [active, setactive] = useState(1);
 
 
 
