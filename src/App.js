@@ -14,7 +14,7 @@ function App() {
       { name: 'Item 7', id: 7 },
   ]);
 
-
+  const [active, setactive] = useState(0);
 
 
 
@@ -46,8 +46,11 @@ function App() {
         <p className='text-gray-600'>Virtual accessories</p>
 
         <div className="accessory-list p-2 mt-3">
-        {accessoryList.map((item, index) => (
-          <div className="accessory-item h-20 w-20 mr-3 border-4 cursor-pointer border-blue-500 rounded-xl">
+
+          {/* List of virtual accessories */}
+        {accessoryList.map((item) => (
+          <div key={item.id} className={(active === item.id?'test border-blue-500 border-2 test' : ' test border test' ) + "test accessory-item h-20 w-20 mr-3  cursor-pointer rounded-xl"}
+          onClick={()=> setactive(item.id)}>
           </div>
           ))}
 
