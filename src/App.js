@@ -31,7 +31,7 @@ function App() {
             <span className='float-right'> <i className="fa fa-brands fa-twitter text-gray-400"></i></span>
           </a>
           {/* Link to codebase  */}
-          <a href='https://github.com/divinejoshua/ten-wonders-react-js' rel="noreferrer" target="_blank" >
+          <a href='https://github.com/divinejoshua/wearkit-vr-js' rel="noreferrer" target="_blank" >
             <span className='float-right mr-4'> <i className="fa fa-brands fa-github text-gray-400"></i></span>
           </a>
         </div>
@@ -43,7 +43,7 @@ function App() {
       </section>
 
       <section className='p-3'>
-        <p className='text-gray-600'>Virtual accessories</p>
+        <p className='font-bold text-gray-400'>Virtual accessories</p>
 
         <div className="accessory-list p-2 mt-3">
 
@@ -51,6 +51,7 @@ function App() {
         {accessoryList.map((item) => (
           <div key={item.id} className={(active === item.id?'test border-blue-500 border-2 test' : ' test border test' ) + "test accessory-item h-20 w-20 mr-3  cursor-pointer rounded-xl"}
           onClick={()=> setactive(item.id)}>
+            {item.id === 1 &&  <i className="fa-solid fa-ban bg-red-500 text-5xl"></i> }
           </div>
           ))}
 
