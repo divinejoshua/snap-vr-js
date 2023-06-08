@@ -6,64 +6,78 @@ export default function Canva() {
 
     const videoRef = useRef(null);
     const sketchRef = useRef(null);
- // Initialize the PoseNet model and p5 sketch
- useEffect(() => {
-    const videoElement = videoRef.current;
-    const sketchElement = sketchRef.current;
 
-    let video; // Video capture
-    let poseNet; // PoseNet model
-    let noseX = 0; // X-coordinate of the nose position
-    let noseY = 0; // Y-coordinate of the nose position
+    
+    // Initialize the PoseNet model and p5 sketch
+    useEffect(() => {
+        const videoElement = videoRef.current;
+        const sketchElement = sketchRef.current;
 
-    const sketch = (p) => {
-        let canvas;
-  
-        p.setup = () => {
-          const { offsetWidth, offsetHeight } = sketchElement.parentElement;
-          canvas = p.createCanvas(offsetWidth, offsetHeight);
-          video = p.createCapture(p.VIDEO);
-          video.size(offsetWidth, offsetHeight);
-          poseNet = ml5.poseNet(video, () => {
-            console.log('Model loaded!');
-          });
-          poseNet.on('pose', (poses) => {
-            if (poses.length > 0) {
-              const nose = poses[0].pose.keypoints[0];
-              noseX = nose.position.x;
-              noseY = nose.position.y;
-            }
-          });
-          video.hide();
-          
+        let video; // Video capture
+        let poseNet; // PoseNet model
+        let noseX = 0; // X-coordinate of the nose position
+        let noseY = 0; // Y-coordinate of the nose position
+
+        const sketch = (p) => {
+            let canvas;
+    
+            p.setup = () => {
+
+                // Get Height and width of the parent element 
+            const { offsetWidth, offsetHeight } = sketchElement.parentElement;
+            canvas = p.createCanvas(offsetWidth, offsetHeight); //Create the canvas
+            video = p.createCapture(p.VIDEO);
+            video.size(offsetWidth, offsetHeight);
+
+            //   Load the poseNet model  
+            poseNet = ml5.poseNet(video, () => {
+                console.log('Model loaded!');
+            });
+            
+            //   Locate poses on the camera
+            poseNet.on('pose', (poses) => {
+                if (poses.length > 0) {
+                const nose = poses[0].pose.keypoints[0];
+                noseX = nose.position.x;
+                noseY = nose.position.y;
+                }
+            });
+
+            video.hide();
+            
+            };
+    
+            // Create the virtual element on the camera
+            p.draw = () => {
+            p.image(video, 0, 0, p.width, p.height);
+            p.fill(255, 0, 0);
+            p.ellipse(noseX, noseY, 50, 50);
+            };
+    
+            // p.windowResized = () => {
+            //   const { offsetWidth, offsetHeight } = videoElement.parentElement;
+            //   p.resizeCanvas(offsetWidth, offsetHeight);
+            //   video.size(offsetWidth, offsetHeight);
+            // };
         };
-  
-        p.draw = () => {
-          p.image(video, 0, 0, p.width, p.height);
-          p.fill(255, 0, 0);
-          p.ellipse(noseX, noseY, 50, 50);
+    
+        //   Initiate p5 
+        new p5(sketch, sketchElement);
+        console.clear()
+    
+        //   Clean up function 
+        return () => {
+            video.hide();
+            poseNet.removeAllListeners();
+            p5.prototype.remove(sketchElement);
         };
-  
-        // p.windowResized = () => {
-        //   const { offsetWidth, offsetHeight } = videoElement.parentElement;
-        //   p.resizeCanvas(offsetWidth, offsetHeight);
-        //   video.size(offsetWidth, offsetHeight);
-        // };
-      };
-  
-      new p5(sketch, sketchElement);
-  
-      return () => {
-        video.hide();
-        poseNet.removeAllListeners();
-        p5.prototype.remove(sketchElement);
-      };
-    }, []);
+
+        }, []);
 
     
 
   return (
-    <div className='camera-canva bg-gray-200 rounded' style={{ borderRadius: '10px', overflow: 'hidden' }}>
+    <div className='camera-canva bg-gray-200 rounded' style={{ borderRadius: '10px', overflow: 'hidden'}}>
          <video ref={videoRef} style={{
             display: 'none',
             maxWidth: '100%',
