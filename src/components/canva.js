@@ -44,7 +44,7 @@ export default function Canva() {
         };
   
         p.windowResized = () => {
-          const { offsetWidth, offsetHeight } = sketchElement.parentElement;
+          const { offsetWidth, offsetHeight } = videoElement.parentElement;
           p.resizeCanvas(offsetWidth, offsetHeight);
           video.size(offsetWidth, offsetHeight);
         };
@@ -68,7 +68,7 @@ export default function Canva() {
             maxWidth: '100%',
             maxHeight: '400px',
             objectFit: 'contain',
-            aspectRatio: '3/2',
+            aspectRatio: '2/3',
   }} />
         <div ref={sketchRef} />
     </div>
