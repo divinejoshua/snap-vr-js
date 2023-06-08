@@ -54,7 +54,6 @@ function App() {
           <div key={item.id} className={(active === item.id?'test border-blue-500 border-2 test' : ' test border test' ) + "test accessory-item h-20 w-20 mr-3 p-3 cursor-pointer rounded-lg"}
           onClick={()=> setactive(item.id)}>
             <img src={item.name} alt={item.id} />
-            {/* {item.id === 1 &&  <i className="fa-solid fa-ban bg-red-500 text-5xl"></i> } */}
           </div>
           ))}
 
