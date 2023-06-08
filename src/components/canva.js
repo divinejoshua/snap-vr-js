@@ -24,7 +24,6 @@ export default function Canva() {
           canvas = p.createCanvas(offsetWidth, offsetHeight);
           video = p.createCapture(p.VIDEO);
           video.size(offsetWidth, offsetHeight);
-          video.hide();
           poseNet = ml5.poseNet(video, () => {
             console.log('Model loaded!');
           });
@@ -35,6 +34,8 @@ export default function Canva() {
               noseY = nose.position.y;
             }
           });
+          video.hide();
+          
         };
   
         p.draw = () => {
@@ -43,11 +44,11 @@ export default function Canva() {
           p.ellipse(noseX, noseY, 50, 50);
         };
   
-        p.windowResized = () => {
-          const { offsetWidth, offsetHeight } = videoElement.parentElement;
-          p.resizeCanvas(offsetWidth, offsetHeight);
-          video.size(offsetWidth, offsetHeight);
-        };
+        // p.windowResized = () => {
+        //   const { offsetWidth, offsetHeight } = videoElement.parentElement;
+        //   p.resizeCanvas(offsetWidth, offsetHeight);
+        //   video.size(offsetWidth, offsetHeight);
+        // };
       };
   
       new p5(sketch, sketchElement);
