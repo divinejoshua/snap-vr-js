@@ -5,13 +5,15 @@ import './App.css';
 function App() {
   // States 
   const [accessoryList, setaccessoryList] = useState([
-      { name: 'glass-1.png', id: 1 },
-      { name: 'Item 2', id: 2 },
-      { name: 'Item 3', id: 3 },
-      { name: 'Item 4', id: 4 },
-      { name: 'Item 5', id: 5 },
-      { name: 'Item 6', id: 6 },
-      { name: 'Item 7', id: 7 },
+      { name: 'https://wearkit-vr.brimble.app/wears/glass-1.jpg', id: 1 },
+      { name: 'https://wearkit-vr.brimble.app/wears/hat-1.jpg', id: 2 },
+      { name: 'https://wearkit-vr.brimble.app/wears/glass-2.jpg', id: 3 },
+      { name: 'https://wearkit-vr.brimble.app/wears/hat-2.jpg', id: 4 },
+      { name: 'https://wearkit-vr.brimble.app/wears/glass-3.jpg', id: 5 },
+      { name: 'https://wearkit-vr.brimble.app/wears/hat-3.jpg', id: 6 },
+      { name: 'https://wearkit-vr.brimble.app/wears/glass-4.jpg', id: 7 },
+      { name: 'https://wearkit-vr.brimble.app/wears/glass-5.jpg', id: 8 },
+      { name: 'https://wearkit-vr.brimble.app/wears/glass-6.jpg', id: 9 },
   ]);
 
   const [active, setactive] = useState(1);
