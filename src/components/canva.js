@@ -7,9 +7,8 @@ export default function Canva() {
     const videoRef = useRef(null);
     const sketchRef = useRef(null);
 
-    
-    // Initialize the PoseNet model and p5 sketch
-    useEffect(() => {
+    function createSketch() {
+
         const videoElement = videoRef.current;
         const sketchElement = sketchRef.current;
 
@@ -24,55 +23,50 @@ export default function Canva() {
             p.setup = () => {
 
                 // Get Height and width of the parent element 
-            const { offsetWidth, offsetHeight } = sketchElement.parentElement;
-            canvas = p.createCanvas(offsetWidth, offsetHeight); //Create the canvas
-            video = p.createCapture(p.VIDEO);
-            video.size(offsetWidth, offsetHeight);
+                const { offsetWidth, offsetHeight } = sketchElement.parentElement;
+                canvas = p.createCanvas(offsetWidth, offsetHeight); //Create the canvas
+                video = p.createCapture(p.VIDEO);
+                video.size(offsetWidth, offsetHeight);
 
-            //   Load the poseNet model  
-            poseNet = ml5.poseNet(video, () => {
-                console.log('Model loaded!');
-            });
-            
-            //   Locate poses on the camera
-            poseNet.on('pose', (poses) => {
-                if (poses.length > 0) {
-                const nose = poses[0].pose.keypoints[0];
-                noseX = nose.position.x;
-                noseY = nose.position.y;
-                }
-            });
+                // Load the poseNet model  
+                poseNet = ml5.poseNet(video, () => {
+                    console.log('Model loaded!');
+                });
+                
+                // Locate poses on the camera
+                poseNet.on('pose', (poses) => {
+                    if (poses.length > 0) {
+                    const nose = poses[0].pose.keypoints[0];
+                    noseX = nose.position.x;
+                    noseY = nose.position.y;
+                    }
+                });
 
-            video.hide();
+                video.hide();
             
             };
     
             // Create the virtual element on the camera
             p.draw = () => {
-            p.image(video, 0, 0, p.width, p.height);
-            p.fill(255, 0, 0);
-            p.ellipse(noseX, noseY, 50, 50);
+                p.image(video, 0, 0, p.width, p.height);
+                p.fill(255, 0, 0);
+                p.ellipse(noseX, noseY, 50, 50);
             };
     
-            // p.windowResized = () => {
-            //   const { offsetWidth, offsetHeight } = videoElement.parentElement;
-            //   p.resizeCanvas(offsetWidth, offsetHeight);
-            //   video.size(offsetWidth, offsetHeight);
-            // };
-        };
-    
-        //   Initiate p5 
-        new p5(sketch, sketchElement);
-        console.clear()
-    
-        //   Clean up function 
-        return () => {
-            video.hide();
-            poseNet.removeAllListeners();
-            p5.prototype.remove(sketchElement);
         };
 
-        }, []);
+         // Initiate p5 
+         new p5(sketch, sketchElement);
+         console.clear()
+
+    }
+
+
+
+    useEffect(() => {
+        // Initialize the PoseNet model and p5 sketch
+        createSketch()
+    }, []);
 
     
 
