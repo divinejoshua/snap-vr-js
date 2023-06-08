@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   // States 
   const [accessoryList, setaccessoryList] = useState([
-      { name: 'Item 1', id: 1 },
+      { name: 'glass-1.png', id: 1 },
       { name: 'Item 2', id: 2 },
       { name: 'Item 3', id: 3 },
       { name: 'Item 4', id: 4 },
@@ -51,6 +51,7 @@ function App() {
         {accessoryList.map((item) => (
           <div key={item.id} className={(active === item.id?'test border-blue-500 border-2 test' : ' test border test' ) + "test accessory-item h-20 w-20 mr-3  cursor-pointer rounded-xl"}
           onClick={()=> setactive(item.id)}>
+            <img src={item.name} alt={item.id} />
             {/* {item.id === 1 &&  <i className="fa-solid fa-ban bg-red-500 text-5xl"></i> } */}
           </div>
           ))}
