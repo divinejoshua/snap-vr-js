@@ -46,7 +46,7 @@ function App() {
       </section>
 
       <section className='p-3'>
-        <p className='font-bold text-gray-400'>Virtual accessories ({accessoryList.length})</p>
+        <p className='font-bold text-gray-400'>Virtual accessories ({accessoryList.length-1})</p>
 
         <div className="accessory-list p-2 mt-3">
 
