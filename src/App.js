@@ -1,5 +1,5 @@
-// import logo from './logo.svg';
 import { useState } from 'react';
+import Canva from "./components/canva";
 import './App.css';
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
 
       {/* Camera canva  */}
       <section className='mt-20 p-3'>
-          <div className='camera-canva bg-gray-200 rounded'></div>
+        <Canva/>
       </section>
 
       <section className='p-3'>
