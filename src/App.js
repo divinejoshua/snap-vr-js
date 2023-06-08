@@ -5,6 +5,7 @@ import './App.css';
 function App() {
   // States 
   const [accessoryList, setaccessoryList] = useState([
+      { name: 'https://wearkit-vr.brimble.app/wears/none.png', id: 0 },
       { name: 'https://wearkit-vr.brimble.app/wears/glass-1.jpg', id: 1 },
       { name: 'https://wearkit-vr.brimble.app/wears/hat-1.jpg', id: 2 },
       { name: 'https://wearkit-vr.brimble.app/wears/glass-2.jpg', id: 3 },
@@ -16,7 +17,7 @@ function App() {
       { name: 'https://wearkit-vr.brimble.app/wears/glass-6.jpg', id: 9 },
   ]);
 
-  const [active, setactive] = useState(1);
+  const [active, setactive] = useState(0);
 
 
 
@@ -45,7 +46,7 @@ function App() {
       </section>
 
       <section className='p-3'>
-        <p className='font-bold text-gray-400'>Virtual accessories</p>
+        <p className='font-bold text-gray-400'>Virtual accessories ({accessoryList.length})</p>
 
         <div className="accessory-list p-2 mt-3">
 
