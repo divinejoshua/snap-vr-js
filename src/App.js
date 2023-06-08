@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   // States 
   const [accessoryList, setaccessoryList] = useState([
-      { name: 'https://wearkit-vr.brimble.app/wears/none.png', id: 0 },
+      { name: 'https://wearkit-vr.brimble.app/wears/none.jpg', id: 0 },
       { name: 'https://wearkit-vr.brimble.app/wears/glass-1.jpg', id: 1 },
       { name: 'https://wearkit-vr.brimble.app/wears/hat-1.jpg', id: 2 },
       { name: 'https://wearkit-vr.brimble.app/wears/glass-2.jpg', id: 3 },
