@@ -32,7 +32,7 @@ function App() {
 
       {/* Camera canva  */}
       <section className='mt-20 p-3'>
-        <Canva id={active}/>
+        <Canva itemSelected={active}/>
       </section>
 
       <section className='p-3'>

@@ -1,52 +1,75 @@
-import { React, useEffect, useRef } from 'react'
+import { React, useEffect, useRef, useState } from 'react'
 import ml5 from 'ml5';
 import p5 from 'p5';
-import noseImage from '../assets/wears/hat-2.jpg';
+import ImageHat1 from '../assets/wears/hat-1.png';
+import ImageHat2 from '../assets/wears/hat-2.png';
+import ImageHat3 from '../assets/wears/hat-3.png';
 
-export default function Canva({id}) {
+
+export default function Canva({itemSelected}) {
 
     const videoRef = useRef(null);
     const sketchRef = useRef(null);
-    const noseImageRef = useRef(null);
+    const ImageRef = useRef(null);
+    const itemNumberRef = useRef(null);
 
-    function createSketch() {
+    function createSketch(itemSelected) {
 
         const videoElement = videoRef.current;
         const sketchElement = sketchRef.current;
-        let noseImageElement = noseImageRef.current;
+        let ImageHat1Element =ImageRef.current;
+        let ImageHat2Element =ImageRef.current;
+        let ImageHat3Element =ImageRef.current;
+        let itemNumberRefN =itemNumberRef.current;
+        
+
+        // videoElement.style.display = 'none';
 
         let video; // Video capture
         let poseNet; // PoseNet model
-        let noseX = 0; // X-coordinate of the nose position
-        let noseY = 0; // Y-coordinate of the nose position
 
-        const sketch = (p) => {
+        let leftEyeX = 0; //Forehead position
+        let leftEyeY = 0; //Forehead position
+
+        let rightEyeX = 0; //Forehead position
+        let rightEyeY = 0; //Forehead position
+
+        const sketch = (context) => {
+            let selected = itemSelected
             let canvas;
 
-            p.preload = () => {
+            context.preload = () => {
                 // Load the image file
-                noseImageElement = p.loadImage(noseImage);
+                ImageHat1Element = context.loadImage(ImageHat1);
+                ImageHat2Element = context.loadImage(ImageHat2);
+                ImageHat3Element = context.loadImage(ImageHat3);
               };
     
-            p.setup = () => {
+            context.setup = () => {
 
                 // Get Height and width of the parent element 
                 const { offsetWidth, offsetHeight } = sketchElement.parentElement;
-                canvas = p.createCanvas(offsetWidth, offsetHeight); //Create the canvas
-                video = p.createCapture(p.VIDEO);
+                canvas = context.createCanvas(offsetWidth, offsetHeight); //Create the canvas
+                video = context.createCapture(context.VIDEO);
                 video.size(offsetWidth, offsetHeight);
 
                 // Load the poseNet model  
                 poseNet = ml5.poseNet(video, () => {
-                    console.log('Model loaded!');
+                    // console.log('Model loaded!');
                 });
                 
                 // Locate poses on the camera
                 poseNet.on('pose', (poses) => {
                     if (poses.length > 0) {
-                    const nose = poses[0].pose.keypoints[0];
-                    noseX = nose.position.x;
-                    noseY = nose.position.y;
+                        // Get right Eye positions 
+                        const rightEye = poses[0].pose.keypoints[1];
+                        rightEyeX = rightEye.position.x;
+                        rightEyeY = rightEye.position.y;
+
+                         // Get left Eye positions 
+                        const leftEye = poses[0].pose.keypoints[2];
+                        leftEyeX = leftEye.position.x;
+                        leftEyeY = leftEye.position.y;
                     }
                 });
 
@@ -55,29 +78,40 @@ export default function Canva({id}) {
             };
     
             // Create the virtual element on the camera
-            p.draw = () => { 
-                p.image(video, 0, 0, p.width, p.height);
-                p.image(noseImageElement, noseX, noseY, 50, 50);
+            context.draw = () => { 
+                context.image(video, 0, 0, context.width, context.height);
 
+                // Accessory wear 
+                // itemSelected
 
-                // p.fill(255, 0, 0);
-                // p.ellipse(noseX, noseY, 50, 50);
+                // Hat Items 
+                if(Number(itemNumberRefN.textContent)===2) {
+                    context.image(ImageHat1Element, ((leftEyeX + rightEyeX) / 2)-110, ((leftEyeY + rightEyeY) / 2)-200, 220, 220);
+                }
+                if(Number(itemNumberRefN.textContent)===4) {
+                    context.image(ImageHat2Element, ((leftEyeX + rightEyeX) / 2)-110, ((leftEyeY + rightEyeY) / 2)-200, 220, 220);
+                }
+                if(Number(itemNumberRefN.textContent)===6) {
+                    context.image(ImageHat3Element, ((leftEyeX + rightEyeX) / 2)-110, ((leftEyeY + rightEyeY) / 2)-200, 220, 220);
+                }
             };
     
         };
 
          // Initiate p5 
          new p5(sketch, sketchElement);
-         console.clear()
+        //  console.clear()
 
     }
 
 
 
+   
+        
     useEffect(() => {
         // Initialize the PoseNet model and p5 sketch
-        createSketch()
-    }, []);
+        createSketch(itemSelected)
+    }, [itemSelected]);
 
     
 
@@ -91,7 +125,9 @@ export default function Canva({id}) {
             aspectRatio: '2/3',
   }} />
         <div ref={sketchRef}/>
-        <img ref={noseImageRef} src={noseImage} alt="Nose" style={{ display: 'none' }} />
+
+        <p ref={itemNumberRef}>{itemSelected}</p>
+        {/* <img ref={ImageRef} src={ImageHat1} alt="Nose" style={{ display: 'none' }} /> */}
     </div>
     
 
