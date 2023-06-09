@@ -1,23 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Canva from "./components/canva";
+import useWears from "./utils/useWearHook";
 import './App.css';
 
 function App() {
   // States 
-  const [accessoryList, setaccessoryList] = useState([
-      { name: 'https://wearkit-vr.brimble.app/wears/none.jpg', id: 0 },
-      { name: 'https://wearkit-vr.brimble.app/wears/glass-1.jpg', id: 1 },
-      { name: 'https://wearkit-vr.brimble.app/wears/hat-1.jpg', id: 2 },
-      { name: 'https://wearkit-vr.brimble.app/wears/glass-2.jpg', id: 3 },
-      { name: 'https://wearkit-vr.brimble.app/wears/hat-2.jpg', id: 4 },
-      { name: 'https://wearkit-vr.brimble.app/wears/glass-3.jpg', id: 5 },
-      { name: 'https://wearkit-vr.brimble.app/wears/hat-3.jpg', id: 6 },
-      { name: 'https://wearkit-vr.brimble.app/wears/glass-4.jpg', id: 7 },
-      { name: 'https://wearkit-vr.brimble.app/wears/glass-5.jpg', id: 8 },
-      { name: 'https://wearkit-vr.brimble.app/wears/glass-6.jpg', id: 9 },
-  ]);
 
-  const [active, setactive] = useState(0);
+  const {accessoryList, active, setactive} = useWears()
+
 
 
 
@@ -42,7 +32,7 @@ function App() {
 
       {/* Camera canva  */}
       <section className='mt-20 p-3'>
-        <Canva/>
+        <Canva id={active}/>
       </section>
 
       <section className='p-3'>

@@ -1,16 +1,19 @@
 import { React, useEffect, useRef } from 'react'
 import ml5 from 'ml5';
 import p5 from 'p5';
+import noseImage from '../assets/wears/hat-2.jpg';
 
-export default function Canva() {
+export default function Canva({id}) {
 
     const videoRef = useRef(null);
     const sketchRef = useRef(null);
+    const noseImageRef = useRef(null);
 
     function createSketch() {
 
         const videoElement = videoRef.current;
         const sketchElement = sketchRef.current;
+        let noseImageElement = noseImageRef.current;
 
         let video; // Video capture
         let poseNet; // PoseNet model
@@ -19,6 +22,11 @@ export default function Canva() {
 
         const sketch = (p) => {
             let canvas;
+
+            p.preload = () => {
+                // Load the image file
+                noseImageElement = p.loadImage(noseImage);
+              };
     
             p.setup = () => {
 
@@ -47,10 +55,13 @@ export default function Canva() {
             };
     
             // Create the virtual element on the camera
-            p.draw = () => {
+            p.draw = () => { 
                 p.image(video, 0, 0, p.width, p.height);
-                p.fill(255, 0, 0);
-                p.ellipse(noseX, noseY, 50, 50);
+                p.image(noseImageElement, noseX, noseY, 50, 50);
+
+
+                // p.fill(255, 0, 0);
+                // p.ellipse(noseX, noseY, 50, 50);
             };
     
         };
@@ -79,7 +90,10 @@ export default function Canva() {
             objectFit: 'contain',
             aspectRatio: '2/3',
   }} />
-        <div ref={sketchRef} />
+        <div ref={sketchRef}/>
+        <img ref={noseImageRef} src={noseImage} alt="Nose" style={{ display: 'none' }} />
     </div>
+    
+
   )
 }
