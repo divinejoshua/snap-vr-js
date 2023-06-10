@@ -46,11 +46,11 @@ export default function Canva({itemSelected}) {
         let video; // Video capture
         let poseNet; // PoseNet model
 
-        let leftEyeX = 0; //Forehead position
-        let leftEyeY = 0; //Forehead position
+        let leftEyeX = 0; //Left eye position
+        let leftEyeY = 0; //Left eye position
 
-        let rightEyeX = 0; //Forehead position
-        let rightEyeY = 0; //Forehead position
+        let rightEyeX = 0; //Right eye position
+        let rightEyeY = 0; //Right eye position
 
         const sketch = (context) => {
             let selected = itemSelected
