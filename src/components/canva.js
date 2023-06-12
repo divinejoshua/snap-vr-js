@@ -103,6 +103,8 @@ export default function Canva({itemSelected}) {
     
             // Create the virtual element on the camera
             context.draw = () => { 
+                context.translate(context.width,  0);
+                context.scale(-1, 1);
                 context.image(video, 0, 0, context.width, context.height);
 
                 // Accessory wear 
